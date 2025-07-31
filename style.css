@@ -1,0 +1,402 @@
+/* =======================
+   IMPORT TIPOGRAFÍA
+   ======================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* =======================
+   CENTRAR TITULOS DE CAMPOS
+   ======================= */
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-light);
+  text-align: center; /* 👉 centrado */
+}
+
+/* =======================
+   CONTENEDOR PRINCIPAL
+   ======================= */
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.contenedor-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.titulo-principal {
+  text-align: center;
+  color: #D32F2F;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+main {
+  max-width: 900px;
+  width: 100%;
+}
+
+/* =======================
+   VARIABLES
+   ======================= */
+:root {
+  --primary-color: #FF5722;
+  --primary-hover: #b71c1c;
+  --secondary-color: #1976D2;
+  --secondary-hover: #1259a5;
+  --clasificación: #D32F2F;
+  --bg-light: #4a4a4a;
+  --bg-white: #ffffff;
+  --bg-alt: #f9f9f9;
+  --text-dark: #222;
+  --text-light: #555;
+  --border-color: #ddd;
+  --radius: 8px;
+  --shadow: 0 3px 6px rgba(0,0,0,0.12);
+  --shadow-hover: 0 6px 12px rgba(0,0,0,0.18);
+}
+
+/* =======================
+   RESET
+   ======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  margin: 30px;
+  line-height: 1.5;
+}
+
+/* =======================
+   TÍTULO
+   ======================= */
+h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  color: var(--primary-color);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* =======================
+   SECCIONES
+   ======================= */
+.upload-section {
+  margin-bottom: 20px;
+  padding: 18px;
+  background: var(--bg-white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+}
+.upload-section:hover {
+  box-shadow: var(--shadow-hover);
+}
+.upload-section:nth-of-type(even) {
+  background: var(--bg-alt);
+}
+
+.row-fields {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.row-fields .field {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* =======================
+   INPUTS
+   ======================= */
+input[type="file"],
+input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="number"] {
+  width: 10ch;
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  margin: 0 auto;     /* 👉 centra horizontalmente */
+  display: block;     /* 👉 fuerza línea propia */
+}
+
+input:hover {
+  border-color: #aaa;
+}
+input:focus {
+  border-color: var(--secondary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(25,118,210,0.25);
+}
+
+/* =======================
+   CHECKBOXES
+   ======================= */
+.columns-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.columns-horizontal label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  background: #f9f9f9;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.columns-horizontal input {
+  margin-right: 6px;
+}
+
+.columns-horizontal label:hover {
+  background: #f0f0f0;
+  border-color: #bbb;
+}
+
+.columns-horizontal input:checked + span {
+  font-weight: 600;
+  color: var(--secondary-color);
+}
+
+/* =======================
+   BOTONES
+   ======================= */
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* 🎯 Botón principal (Generar clasificación) con color más llamativo */
+button.primary {
+  background-color: var(--primary-color);   /* Azul moderno profesional */
+}
+button.primary:hover:not(:disabled) {
+  background-color: var(--primary-color);   /* Azul más oscuro al pasar el ratón */
+}
+
+/* Botón secundario azul */
+button.secondary {
+  background-color: var(--secondary-color);
+}
+button.secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+/* 👉 Centramos los botones de generar y reiniciar */
+.upload-section button {
+  margin: 0 10px;
+}
+.upload-section {
+  text-align: center; /* 👉 centra contenido de esta sección */
+}
+
+.copy-btn-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* =======================
+   VISTA PREVIA
+   ======================= */
+#preview-container {
+  display: flex;
+  gap: 25px;
+  margin-top: 25px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.preview-box {
+  flex: 1;
+  background: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 15px;
+  min-height: 200px;
+  min-width: 280px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.preview-box:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.preview-box h3 {
+  margin-top: 0;
+  text-align: center;
+  background: var(--clasificación);
+  color: #fff;
+  padding: 8px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  font-size: 16px;
+}
+
+/* =======================
+   POPUP RESET
+   ======================= */
+#confirmResetPopup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+}
+
+#confirmResetPopup .popup-content {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+#confirmResetPopup button {
+  margin: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#confirmResetPopup #confirmResetBtn {
+  background: #d32f2f;
+  color: white;
+}
+
+#confirmResetPopup #cancelResetBtn {
+  background: #ccc;
+}
+
+/* =======================
+   ALERTS UNIFICADOS 
+   ======================= */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.popup-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.popup-buttons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup-buttons button.primary {
+  background: #1976D2;
+  color: white;
+}
+
+/* =======================
+   RESPONSIVE
+   ======================= */
+@media (max-width: 768px) {
+  body {
+    margin: 15px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .row-fields {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #preview-container {
+    flex-direction: column;
+  }
+
+  .preview-box {
+    min-width: 100%;
+  }
+
+  .extra-options {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

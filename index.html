@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de Clasificaciones</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="contenedor-principal">
+  <h1 class="titulo-principal">GENERADOR DE CLASIFICACIONES</h1>
+  <main>
+  <!-- Subida de archivos -->
+  <div class="upload-section row-fields">
+    <div class="field">
+      <label for="oldFile">Clasificación anterior:</label>
+      <input type="file" id="oldFile" accept=".csv">
+    </div>
+    <div class="field">
+      <label for="newFile">Clasificación nueva:</label>
+      <input type="file" id="newFile" accept=".csv">
+    </div>
+  </div>
+
+<!-- Nombre, piloto y carrera -->
+<div class="upload-section row-fields">
+  <div class="field" style="display:flex; flex-direction:column; gap:10px;">
+    <label for="className">Nombre de la clasificación:</label>
+    <input type="text" id="className" placeholder="Ej: CLASIFICACIÓN">
+
+    <label for="highlightDriver">Piloto a marcar:</label>
+    <input type="text" id="highlightDriver" placeholder="Ej: Jose Krilín">
+  </div>
+
+  <div class="field">
+    <label for="raceNumber">Carrera actual:</label>
+    <input type="number" id="raceNumber" placeholder="Ej:1" min="1">
+  </div>
+  <div class="field">
+    <label for="totalRaces">Total de carreras:</label>
+    <input type="number" id="totalRaces" placeholder="Ej: 1" min="1">
+  </div>
+</div>
+
+  <!-- Selección de columnas -->
+  <div class="upload-section">
+    <label>Columnas de la clasificación:</label>
+    <div class="columns-horizontal">
+      <label><input type="checkbox" value="position" checked><span>Posición</span></label>
+      <label><input type="checkbox" value="country" checked><span>País</span></label>
+      <label><input type="checkbox" value="name" checked><span>Nombre</span></label>
+      <label><input type="checkbox" value="points"><span>Puntos</span></label>
+      <label><input type="checkbox" value="poles"><span>Poles</span></label>
+      <label><input type="checkbox" value="wins"><span>Victorias</span></label>
+      <label><input type="checkbox" value="top5"><span>Top 5</span></label>
+      <label><input type="checkbox" value="avgstart"><span>Media Clasificación</span></label>
+      <label><input type="checkbox" value="avgfinish"><span>Media Final</span></label>
+      <label><input type="checkbox" value="starts"><span>Participaciones</span></label>
+      <label><input type="checkbox" value="lapslead"><span>Vueltas Lideradas</span></label>
+      <label><input type="checkbox" value="incidents"><span>Incidentes</span></label>
+      <label><input type="checkbox" value="irating"><span>iRating</span></label>
+      <label><input type="checkbox" value="laps"><span>Vueltas Totales</span></label>
+    </div>
+  </div>
+
+<!-- Tamaño de clasificación y nuevas opciones -->
+<div class="upload-section row-fields">
+  <!-- Campo para elegir tamaño -->
+  <div class="field">
+    <label for="size">Tamaño de la clasificación:</label>
+    <input type="number" id="size" placeholder="Ej: 20" min="1" max="99">
+  </div>
+
+  <!-- Opciones extra -->
+  <div class="field">
+    <label>Opciones extra:</label>
+    <div class="columns-horizontal">
+      <label><input type="checkbox" id="show-legend"><span>Mostrar leyenda</span></label>
+      <label><input type="checkbox" id="show-exits"><span>Mostrar salidas del Top 20</span></label>
+    </div>
+  </div>
+</div>
+
+  <!-- Botones -->
+  <div class="upload-section">
+   <button id="generateBtn" class="primary">Generar clasificación</button>
+   <button id="resetBtn" class="secondary">Reiniciar</button>	
+  </div>
+
+  <!-- Vista previa -->
+  <div id="preview-container">
+    <div class="preview-box">
+      <h3>Vista previa (Clasificación anterior)</h3>
+      <div id="preview-old"></div>
+    </div>
+    <div class="preview-box">
+      <h3>Vista previa (Clasificación nueva)</h3>
+      <div id="preview-new"></div>
+    </div>
+  </div>
+
+  <!-- Copiar HTML -->
+  <div class="copy-btn-container">
+    <button id="copyBtn" disabled>Copiar HTML</button>
+  </div>
+
+  </main>
+</div> 
+  <script src="script.js"></script>
+</body>
+</html>

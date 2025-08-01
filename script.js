@@ -393,70 +393,85 @@ document.addEventListener("DOMContentLoaded", () => {
     "show-exits"
   ].forEach(id => setupUpdateOnChange(id));
 
-  // --- CREAR TABLA ---
-  function buildTable(data, headers, selectedCols, highlightDriver, page, size, type) {
-    let parsedSize = parseInt(size);
-    let totalToShow = isNaN(parsedSize) || parsedSize <= 0 ? data.length : Math.min(parsedSize, data.length);
-    const limitedData = data.slice(0, totalToShow);
-    const rows = limitedData.slice((page - 1) * 20, page * 20);
+/* =======================
+   CREAR TABLAS
+======================= */
+// Marca a los pilotos que entran en el top 20
+function buildTable(data, headers, selectedCols, highlightDriver, page, size, type) {
+  let parsedSize = parseInt(size);
+  let totalToShow = isNaN(parsedSize) || parsedSize <= 0 ? data.length : Math.min(parsedSize, data.length);
+  const limitedData = data.slice(0, totalToShow);
+  const rows = limitedData.slice((page - 1) * 20, page * 20);
 
-    let oldPositionsMap = {};
-    if (type === "new" && window._oldData && window._oldHeaders) {
-      const posIdxOld = findColumnIndex(window._oldHeaders, ["position"]);
-      const nameIdxOld = findColumnIndex(window._oldHeaders, ["name"]);
-      window._oldData.forEach(row => {
-        const name = row[nameIdxOld];
-        const pos = parseInt(row[posIdxOld]);
-        oldPositionsMap[name] = pos;
-      });
-    }
+  // Para detectar nuevas entradas solo en la tabla nueva
+  let newEntries = [];
+  if (type === "new" && window._oldData && window._oldHeaders) {
+    const oldTop20 = window._oldData.slice(0, 20).map(row => getValueFromRow(row, window._oldHeaders, ["name"]));
+    const newTop20 = window._newData.slice(0, 20).map(row => getValueFromRow(row, window._newHeaders, ["name"]));
+    newEntries = newTop20.filter(name => !oldTop20.includes(name));
+  }
 
-    const wrapper = document.createElement("div");
-    wrapper.classList.add("scroll-container");
-
-    const table = document.createElement("table");
-    table.classList.add("classification-table");
-    table.style.width = "auto";  // para ajuste al contenido
-
-    const thead = document.createElement("thead");
-    const trHead = document.createElement("tr");
-    selectedCols.forEach(col => {
-      const th = document.createElement("th");
-      th.textContent = col.text;
-      trHead.appendChild(th);
+  let oldPositionsMap = {};
+  if (type === "new" && window._oldData && window._oldHeaders) {
+    const posIdxOld = findColumnIndex(window._oldHeaders, ["position"]);
+    const nameIdxOld = findColumnIndex(window._oldHeaders, ["name"]);
+    window._oldData.forEach(row => {
+      const name = row[nameIdxOld];
+      const pos = parseInt(row[posIdxOld]);
+      oldPositionsMap[name] = pos;
     });
-    thead.appendChild(trHead);
-    table.appendChild(thead);
+  }
 
-    const tbody = document.createElement("tbody");
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("scroll-container");
 
-    const posIdxNew = findColumnIndex(headers, ["position"]);
-    const nameIdxNew = findColumnIndex(headers, ["name"]);
+  const table = document.createElement("table");
+  table.classList.add("classification-table");
+  table.style.width = "auto";
 
-    rows.forEach(row => {
-      const tr = document.createElement("tr");
+  const thead = document.createElement("thead");
+  const trHead = document.createElement("tr");
+  selectedCols.forEach(col => {
+    const th = document.createElement("th");
+    th.textContent = col.text;
+    trHead.appendChild(th);
+  });
+  thead.appendChild(trHead);
+  table.appendChild(thead);
 
-      const pos = parseInt(row[posIdxNew]);
-      const name = row[nameIdxNew];
+  const tbody = document.createElement("tbody");
 
-      if (pos === 1) tr.classList.add("pos-gold");
-      else if (pos === 2) tr.classList.add("pos-silver");
-      else if (pos === 3) tr.classList.add("pos-bronze");
+  const posIdxNew = findColumnIndex(headers, ["position"]);
+  const nameIdxNew = findColumnIndex(headers, ["name"]);
 
-      if (name === highlightDriver) tr.classList.add("highlight-driver");
+  rows.forEach(row => {
+    const tr = document.createElement("tr");
 
-      selectedCols.forEach(col => {
-        const idx = findColumnIndex(headers, [col.value]);
-        let val = row[idx];
-        if (!isNaN(val) && val !== "") val = parseInt(val);
+    const pos = parseInt(row[posIdxNew]);
+    const name = row[nameIdxNew];
 
-        if (col.text === "País" && val) {
-          val = `<img src="https://flagcdn.com/h20/${val.toLowerCase()}.png" width="21" height="14" alt="Bandera">`;
-        }
+    if (pos === 1) tr.classList.add("pos-gold");
+    else if (pos === 2) tr.classList.add("pos-silver");
+    else if (pos === 3) tr.classList.add("pos-bronze");
 
-        const td = document.createElement("td");
+    if (name === highlightDriver) tr.classList.add("highlight-driver");
 
-        if (col.value === "position" && type === "new") {
+    selectedCols.forEach(col => {
+      const idx = findColumnIndex(headers, [col.value]);
+      let val = row[idx];
+      if (!isNaN(val) && val !== "") val = parseInt(val);
+
+      if (col.text === "País" && val) {
+        val = `<img src="https://flagcdn.com/h20/${val.toLowerCase()}.png" width="21" height="14" alt="Bandera">`;
+      }
+
+      const td = document.createElement("td");
+
+      if (col.value === "position" && type === "new") {
+        // Aquí marcamos si es nueva entrada
+        if (newEntries.includes(name)) {
+          td.innerHTML = `${pos} <span class="pos-new">🆕</span>`;
+        } else {
           const oldPos = oldPositionsMap[name];
           if (oldPos !== undefined) {
             const diff = oldPos - pos;
@@ -470,20 +485,21 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             td.innerHTML = `${pos} <span class="pos-new">🆕</span>`;
           }
-        } else {
-          td.innerHTML = (val === "" || val === undefined) ? "0" : val;
         }
+      } else {
+        td.innerHTML = (val === "" || val === undefined) ? "0" : val;
+      }
 
-        tr.appendChild(td);
-      });
-
-      tbody.appendChild(tr);
+      tr.appendChild(td);
     });
 
-    table.appendChild(tbody);
-    wrapper.appendChild(table);
-    return wrapper;
-  }
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  wrapper.appendChild(table);
+  return wrapper;
+}
 
   // --- PAGINACIÓN ---
   function renderPagination(container, type, total) {
@@ -775,13 +791,19 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
     return "";
   }
 
-  // Adaptación de buildTable para ventana nueva, paginada
+  // Construye tabla con paginación y detecta entradas nuevas en Top 20
   function buildTableNewWindow(data, headers, selectedCols, highlightDriver, page, size) {
-    const totalToShow = isNaN(parseInt(size)) || parseInt(size) <= 0 ? data.length : Math.min(parseInt(size), data.length);
+    const totalToShow = (isNaN(userSize) || userSize <= 0) ? data.length : Math.min(userSize, data.length);
     const startIdx = (page - 1) * 20;
     const endIdx = Math.min(page * 20, totalToShow);
     const rows = data.slice(startIdx, endIdx);
 
+    const oldTop20Names = window._oldData.slice(0, 20).map(row => {
+      const nameIdxOld = window._oldHeaders.indexOf("name");
+      return row[nameIdxOld];
+    });
+
+    // Mapa posiciones antiguas para cambios
     let oldPositionsMap = {};
     if (window._oldData && window._oldHeaders) {
       const posIdxOld = window._oldHeaders.indexOf("position");
@@ -796,7 +818,7 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
     const table = document.createElement("table");
     table.classList.add("classification-table");
 
-    // Build header
+    // Header
     const thead = document.createElement("thead");
     const trHead = document.createElement("tr");
     selectedCols.forEach(col => {
@@ -807,7 +829,7 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
     thead.appendChild(trHead);
     table.appendChild(thead);
 
-    // Build body
+    // Body
     const tbody = document.createElement("tbody");
     const posIdxNew = headers.indexOf("position");
     const nameIdxNew = headers.indexOf("name");
@@ -837,7 +859,11 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
 
         if (col.value === "position") {
           const oldPos = oldPositionsMap[name];
-          if (oldPos !== undefined) {
+          const isNewEntryTop20 = pos <= 20 && !oldTop20Names.includes(name);
+
+          if (isNewEntryTop20) {
+            td.innerHTML = `${pos} <span class="pos-new">🆕</span>`;
+          } else if (oldPos !== undefined) {
             const diff = oldPos - pos;
             if (diff > 0) {
               td.innerHTML = `${pos} <span class="pos-up">▲${diff}</span>`;
@@ -863,33 +889,53 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
     return table;
   }
 
-  // Función para renderizar paginación en ventana nueva
-  function renderPaginationNewWindow(container, page, totalPages) {
-    container.innerHTML = "";
-
+  // Renderiza paginación en ventana popup
+  function setupPagination() {
+    paginationContainer.innerHTML = "";
     if (totalPages <= 1) return;
 
     const prevBtn = document.createElement("button");
     prevBtn.textContent = "◀️";
-    prevBtn.disabled = page === 1;
+    prevBtn.disabled = currentPage === 1;
     prevBtn.style.marginRight = "10px";
 
     const nextBtn = document.createElement("button");
     nextBtn.textContent = "▶️";
-    nextBtn.disabled = page === totalPages;
+    nextBtn.disabled = currentPage === totalPages;
 
     const pageInfo = document.createElement("span");
-    pageInfo.textContent = `Página ${page} de ${totalPages}`;
+    pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
     pageInfo.style.margin = "0 10px";
     pageInfo.style.userSelect = "none";
 
-    container.appendChild(prevBtn);
-    container.appendChild(pageInfo);
-    container.appendChild(nextBtn);
+    paginationContainer.appendChild(prevBtn);
+    paginationContainer.appendChild(pageInfo);
+    paginationContainer.appendChild(nextBtn);
 
-    return { prevBtn, nextBtn };
+    function updatePaginationButtons() {
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+      pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+    }
+
+    prevBtn.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage(currentPage);
+        updatePaginationButtons();
+      }
+    };
+
+    nextBtn.onclick = () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage(currentPage);
+        updatePaginationButtons();
+      }
+    };
   }
 
+  // Abrir ventana popup
   const newWin = window.open("", "_blank", "width=1000,height=700,scrollbars=yes,resizable=yes");
   if (!newWin) {
     alert("Por favor, permite ventanas emergentes para este sitio.");
@@ -1101,17 +1147,41 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
     }
   }
 
+  setupPagination();
+
   function setupPagination() {
     paginationContainer.innerHTML = "";
     if (totalPages <= 1) return;
 
-    const { prevBtn, nextBtn } = renderPaginationNewWindow(paginationContainer, currentPage, totalPages);
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "◀️";
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.style.marginRight = "10px";
+
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "▶️";
+    nextBtn.disabled = currentPage === totalPages;
+
+    const pageInfo = document.createElement("span");
+    pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+    pageInfo.style.margin = "0 10px";
+    pageInfo.style.userSelect = "none";
+
+    paginationContainer.appendChild(prevBtn);
+    paginationContainer.appendChild(pageInfo);
+    paginationContainer.appendChild(nextBtn);
+
+    function updatePaginationButtons() {
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+      pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+    }
 
     prevBtn.onclick = () => {
       if (currentPage > 1) {
         currentPage--;
         renderPage(currentPage);
-        renderPaginationNewWindow(paginationContainer, currentPage, totalPages);
+        updatePaginationButtons();
       }
     };
 
@@ -1119,15 +1189,13 @@ document.getElementById("SeeBtn").addEventListener("click", () => {
       if (currentPage < totalPages) {
         currentPage++;
         renderPage(currentPage);
-        renderPaginationNewWindow(paginationContainer, currentPage, totalPages);
+        updatePaginationButtons();
       }
     };
   }
 
   renderPage(currentPage);
-  setupPagination();
 });
-
 
 
 });

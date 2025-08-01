@@ -18,7 +18,7 @@ Esta aplicación web permite cargar archivos CSV con datos de clasificaciones de
 
 ## Uso
 
-1. Visita la pagina web [https://jkrilin.github.io/generadordeclasificacion/](https://jkrilin.github.io/comparadordeclasificaciones/) y selecciona los archivos CSV para las clasificaciones antigua y nueva.
+1. Selecciona los archivos CSV para las clasificaciones antigua y nueva.
 2. Define el nombre que quieres mostrar para cada archivo.
 3. Selecciona las columnas que quieres que aparezcan en la tabla.
 4. Configura opciones como piloto destacado, tamaño máximo de tabla, mostrar leyenda y pilotos salientes.

@@ -4,7 +4,7 @@ Esta aplicación web permite cargar archivos CSV con datos de clasificaciones de
 
 ## Funcionalidades principales
 
-- Visita la pagina web https://jkrilin.github.io/generadordeclasificacion/ y carga de archivos CSV para clasificaciones antiguas y nuevas.
+- Carga de archivos CSV para clasificaciones antiguas y nuevas.
 - Selección dinámica de columnas a mostrar en la tabla.
 - Visualización lado a lado de clasificaciones anteriores y nuevas.
 - Indicadores visuales para cambios en posiciones (sube, baja, nueva entrada).
@@ -18,7 +18,7 @@ Esta aplicación web permite cargar archivos CSV con datos de clasificaciones de
 
 ## Uso
 
-1. Selecciona los archivos CSV para las clasificaciones antigua y nueva.
+1. Visita la pagina web https://jkrilin.github.io/generadordeclasificacion/ y selecciona los archivos CSV para las clasificaciones antigua y nueva.
 2. Define el nombre que quieres mostrar para cada archivo.
 3. Selecciona las columnas que quieres que aparezcan en la tabla.
 4. Configura opciones como piloto destacado, tamaño máximo de tabla, mostrar leyenda y pilotos salientes.

@@ -1,59 +1,20 @@
 /* =======================
-   IMPORT TIPOGRAF脥A
-   ======================= */
+   IMPORTAR TIPOGRAFíA
+======================= */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 /* =======================
-   CENTRAR TITULOS DE CAMPOS
-   ======================= */
-label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 6px;
-  color: var(--text-light);
-  text-align: center; /* 馃憠 centrado */
-}
-
-/* =======================
-   CONTENEDOR PRINCIPAL
-   ======================= */
-body {
-  display: flex;
-  justify-content: center;
-}
-
-.contenedor-principal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.titulo-principal {
-  text-align: center;
-  color: #D32F2F;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-main {
-  max-width: 900px;
-  width: 100%;
-}
-
-/* =======================
-   VARIABLES
-   ======================= */
+   VARIABLES GLOBALES
+======================= */
 :root {
   --primary-color: #FF5722;
   --primary-hover: #b71c1c;
   --secondary-color: #1976D2;
   --secondary-hover: #1259a5;
-  --clasificaci贸n: #D32F2F;
+  --clasificacion: #D32F2F;
   --bg-light: #4a4a4a;
   --bg-white: #ffffff;
-  --bg-alt: #f9f9f9;
+  --bg-sub: #f1f5f9;
   --text-dark: #222;
   --text-light: #555;
   --border-color: #ddd;
@@ -63,140 +24,89 @@ main {
 }
 
 /* =======================
-   RESET
-   ======================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--bg-light);
-  color: var(--text-dark);
-  margin: 30px;
-  line-height: 1.5;
-}
-
-/* =======================
-   T脥TULO
-   ======================= */
-h1 {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 25px;
-  color: var(--primary-color);
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* =======================
-   SECCIONES
-   ======================= */
-.upload-section {
-  margin-bottom: 20px;
-  padding: 18px;
-  background: var(--bg-white);
-  border-radius: var(--radius);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
-  transition: box-shadow 0.3s ease;
-}
-.upload-section:hover {
-  box-shadow: var(--shadow-hover);
-}
-.upload-section:nth-of-type(even) {
-  background: var(--bg-alt);
-}
-
-.row-fields {
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.row-fields .field {
-  flex: 1;
-  min-width: 220px;
-}
-
-/* =======================
-   INPUTS
-   ======================= */
-input[type="file"],
-input[type="text"] {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px 12px;
-  font-size: 14px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  transition: border 0.2s ease, box-shadow 0.2s ease;
-}
-
-input[type="number"] {
-  width: 10ch;
-  padding: 8px;
-  font-size: 14px;
-  text-align: center;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  transition: border 0.2s ease, box-shadow 0.2s ease;
-  margin: 0 auto;     /* 馃憠 centra horizontalmente */
-  display: block;     /* 馃憠 fuerza l铆nea propia */
-}
-
-input:hover {
-  border-color: #aaa;
-}
-input:focus {
-  border-color: var(--secondary-color);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(25,118,210,0.25);
-}
-
-/* =======================
-   CHECKBOXES
-   ======================= */
-.columns-horizontal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.columns-horizontal label {
+   ALERTA (POPUP)
+======================= */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  text-align: left;
+  line-height: 1.5;
+  max-width: 400px;
+  width: 90%;
+  font-size: 15px;
+  color: #333;
+}
+
+.popup-content p { margin-bottom: 20px; font-weight: 500; }
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.popup-buttons button { min-width: 100px; }
+
+/* =======================
+   INFO DE ARCHIVOS
+======================= */
+.file-info {
+  margin-top: 5px;
+  font-size: 13px;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* =======================
+   BARRA DE PROGRESO
+======================= */
+.progress-container {
+  margin: 20px auto;
+  width: 80%;
+  background: #e0e0e0;
+  border-radius: 10px;
+  height: 25px;
+  overflow: hidden;
+  display: none;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--secondary-color), #42a5f5);
+  transition: width 0.2s linear;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 14px;
-  background: #f9f9f9;
-  padding: 6px 10px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.columns-horizontal input {
-  margin-right: 6px;
-}
-
-.columns-horizontal label:hover {
-  background: #f0f0f0;
-  border-color: #bbb;
-}
-
-.columns-horizontal input:checked + span {
-  font-weight: 600;
-  color: var(--secondary-color);
+  font-weight: bold;
+  color: #000;
+  text-shadow: 1px 1px 2px #fff;
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* =======================
    BOTONES
-   ======================= */
+======================= */
 button {
   background-color: var(--primary-color);
   color: white;
@@ -210,10 +120,13 @@ button {
   box-shadow: var(--shadow);
 }
 
-button:disabled {
-  background-color: #999;
+button:disabled,
+button.disabled {
+  background-color: #999 !important;
   cursor: not-allowed;
-  box-shadow: none;
+  box-shadow: none !important;
+  color: #eee;
+  pointer-events: none;
 }
 
 button:hover:not(:disabled) {
@@ -221,38 +134,184 @@ button:hover:not(:disabled) {
   transform: translateY(-2px);
 }
 
-/* 馃幆 Bot贸n principal (Generar clasificaci贸n) con color m谩s llamativo */
-button.primary {
-  background-color: var(--primary-color);   /* Azul moderno profesional */
-}
-button.primary:hover:not(:disabled) {
-  background-color: var(--primary-color);   /* Azul m谩s oscuro al pasar el rat贸n */
-}
+button.primary { background-color: var(--primary-color); }
+button.secondary { background-color: var(--secondary-color); }
+button.secondary:hover { background-color: var(--secondary-hover); }
 
-/* Bot贸n secundario azul */
-button.secondary {
-  background-color: var(--secondary-color);
-}
-button.secondary:hover {
-  background-color: var(--secondary-hover);
-}
+/* =======================
+   RESET
+======================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* 馃憠 Centramos los botones de generar y reiniciar */
-.upload-section button {
-  margin: 0 10px;
-}
-.upload-section {
-  text-align: center; /* 馃憠 centra contenido de esta secci贸n */
-}
-
-.copy-btn-container {
-  margin-top: 20px;
-  text-align: center;
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  margin: 30px;
+  line-height: 1.5;
+  display: flex;
+  justify-content: center;
 }
 
 /* =======================
+   CONTENEDOR PRINCIPAL
+======================= */
+.contenedor-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.titulo-principal {
+  text-align: center;
+  color: var(--clasificacion);
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+main {
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* =======================
+   FIELDSETS Y SUB-BLOQUES
+======================= */
+.options-block {
+  background: var(--bg-sub);
+  border: 2px solid var(--secondary-color);
+  border-radius: var(--radius);
+  margin-bottom: 25px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.options-block legend {
+  font-weight: 700;
+  color: var(--secondary-color);
+  font-size: 16px;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.sub-block {
+  background: var(--bg-white);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.sub-block legend {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  text-align: center;
+  padding: 0 6px;
+}
+
+/* =======================
+   FILAS Y CAMPOS
+======================= */
+.row-fields {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.field { flex: 1; min-width: 220px; text-align: center; }
+.field-title { font-weight: 600; margin-bottom: 6px; color: var(--text-light); }
+
+/* =======================
+   INPUTS
+======================= */
+input[type="file"], input[type="text"], input[type="number"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+}
+
+input[type="number"] { width: 10ch; margin: 0 auto; display: block; }
+
+input:hover { border-color: #aaa; }
+input:focus {
+  border-color: var(--secondary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(25,118,210,0.25);
+}
+
+/* =======================
+   COLUMNAS
+======================= */
+.columns-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.columns-list span {
+  background: #f0f0f0;
+  padding: 6px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.columns-list span:hover { background: #ddd; }
+.columns-list span.selected {
+  background: #1976D2;
+  color: white;
+  border-color: #1259a5;
+}
+
+.selected-columns {
+  margin-top: 10px;
+  padding: 10px;
+  min-height: 50px;
+  border: 2px dashed #aaa;
+  background: #fafafa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.column-tag {
+  background: #1976D2;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: grab;
+}
+.column-tag.dragging { opacity: 0.5; }
+
+.championship-title {
+  text-align: center;
+  color: var(--clasificacion);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 15px 0 10px 0;
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+}
+/* =======================
    VISTA PREVIA
-   ======================= */
+======================= */
 #preview-container {
   display: flex;
   gap: 25px;
@@ -270,133 +329,181 @@ button.secondary:hover {
   min-height: 200px;
   min-width: 280px;
   box-shadow: var(--shadow);
-  transition: box-shadow 0.3s ease;
-}
-
-.preview-box:hover {
-  box-shadow: var(--shadow-hover);
+  overflow: auto;
 }
 
 .preview-box h3 {
   margin-top: 0;
   text-align: center;
-  background: var(--clasificaci贸n);
-  color: #fff;
+  background: var(--clasificacion);
+  color: #FFFFFF;
   padding: 8px;
   border-radius: var(--radius) var(--radius) 0 0;
   font-size: 16px;
 }
 
 /* =======================
-   POPUP RESET
-   ======================= */
-#confirmResetPopup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  z-index: 1000;
+   TABLA DE CLASIFICACIóN
+======================= */
+/* Contenedor con scroll horizontal */
+.scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-height: none;
+  border: 1px solid #ccc;
 }
 
-#confirmResetPopup .popup-content {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 12px;
+/* Tabla con ancho mínimo calculado para 4 columnas */
+.classification-table {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 600px;
+  }
+
+.classification-table th,
+.classification-table td {
+  padding: 8px;
+  border: 1px solid #000;
   text-align: center;
-  max-width: 350px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  word-wrap: break-word;
+}
+.classification-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+  border: 3px solid #000;
 }
 
-#confirmResetPopup button {
-  margin: 10px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
+.classification-table thead { background-color: #222; color: white; }
+
+.classification-table th,
+.classification-table td {
+  padding: 8px 10px;
+  border: 2px solid #000;
 }
 
-#confirmResetPopup #confirmResetBtn {
-  background: #d32f2f;
-  color: white;
-}
+.classification-table tbody tr:nth-child(even) { background-color: #f9f9f9; }
+.classification-table tbody tr:hover { background-color: #f1f1f1; }
 
-#confirmResetPopup #cancelResetBtn {
-  background: #ccc;
+/* Pilotos destacados */
+.pos-gold { background: #FFD700 !important; }
+.pos-silver { background: #C0C0C0 !important; }
+.pos-bronze { background: #CD7F32 !important; }
+.highlight-driver {
+  background: #1976D2 !important;
+  color: white !important;
+  border-top: 3px solid #000 !important;
+  border-bottom: 3px solid #000 !important;
 }
 
 /* =======================
-   ALERTS UNIFICADOS 
-   ======================= */
-.popup-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
+   CAMBIO DE POSICION
+======================= */
+
+.pos-up {
+  color: #00c853;
+  font-weight: bold;
+  margin-left: 6px;
+  user-select: none;
+}
+
+.pos-down {
+  color: #d50000;
+  font-weight: bold;
+  margin-left: 6px;
+  user-select: none;
+}
+
+.pos-same {
+  color: #888;
+  margin-left: 6px;
+  user-select: none;
+}
+
+.pos-new {
+  color: #00c853;
+  font-weight: bold;
+  margin-left: 6px;
+  user-select: none;
+}
+
+/* =======================
+   SALIDAS DEL TOP 20
+======================= */
+.exit-count {
+  color: var(--clasificacion);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.driver-exit {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+
+.driver-exit img {
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+/* Contenedor pilotos que salen del Top 20 */
+.exits-list {
+  margin-top: 10px;
+  border: 2px solid var(--clasificacion);
+  background-color: #fff0f0;
+  padding: 10px;
+  border-radius: var(--radius);
+}
+
+/* =======================
+   PAGINACIóN
+======================= */
+.pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 400px;
-  font-size: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.popup-buttons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
+  margin-top: 12px;
   gap: 10px;
 }
-
-.popup-buttons button {
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.popup-buttons button.primary {
-  background: #1976D2;
-  color: white;
+.pagination button {
+  padding: 6px 12px;
+  font-size: 13px;
 }
 
 /* =======================
-   RESPONSIVE
-   ======================= */
-@media (max-width: 768px) {
-  body {
-    margin: 15px;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  .row-fields {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  #preview-container {
-    flex-direction: column;
-  }
-
-  .preview-box {
-    min-width: 100%;
-  }
-
-  .extra-options {
-    flex-direction: column;
-    gap: 10px;
-  }
+   CONTENEDOR EXTRAS (leyenda, salidas)
+======================= */
+.extras-container {
+  margin-top: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--text-dark);
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
 }
+
+/* Leyenda movimientos dentro de extras */
+.extras-container > div {
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+
+
+.legend-update-texts {
+  font-weight: 600;
+  color: var(--text-dark);
+  white-space: nowrap; /* evitar que el texto se divida */
+  margin-left: 20px;
+  display: flex;
+}
+
+  

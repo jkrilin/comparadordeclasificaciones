@@ -7,104 +7,171 @@
 </head>
 <body>
   <div class="contenedor-principal">
-  <h1 class="titulo-principal">GENERADOR DE CLASIFICACIONES</h1>
-  <main>
-  <!-- Subida de archivos -->
-  <div class="upload-section row-fields">
-    <div class="field">
-      <label for="oldFile">Clasificación anterior:</label>
-      <input type="file" id="oldFile" accept=".csv">
+    <h1 class="titulo-principal">GENERADOR DE CLASIFICACIONES</h1>
+    <main>
+
+<!-- =======================
+     SUBIDA DE ARCHIVOS
+======================= -->
+<fieldset class="options-block">
+  <legend>📂 Subida de archivos</legend>
+  <div class="sub-block">
+    <div class="row-fields" style="text-align:center;">
+      <div class="field">
+        <div class="field-title">Clasificación anterior:</div>
+        <input type="file" id="oldFile" accept=".csv">
+        <div id="oldFileInfo" class="file-info"></div> <!-- info datos cargados -->
+      </div>
+      <div class="field">
+        <div class="field-title">Clasificación nueva:</div>
+        <input type="file" id="newFile" accept=".csv">
+        <div id="newFileInfo" class="file-info"></div> <!-- info datos cargados -->
+      </div>
     </div>
-    <div class="field">
-      <label for="newFile">Clasificación nueva:</label>
-      <input type="file" id="newFile" accept=".csv">
+    <!-- Botón cargar archivos -->
+    <div style="text-align:center; margin-top:15px;">
+      <button id="loadFilesBtn" class="primary">Cargar archivos</button>
+	  <button id="resetBtn" class="secondary">Reiniciar</button>
     </div>
-  </div>
-
-<!-- Nombre, piloto y carrera -->
-<div class="upload-section row-fields">
-  <div class="field" style="display:flex; flex-direction:column; gap:10px;">
-    <label for="className">Nombre de la clasificación:</label>
-    <input type="text" id="className" placeholder="Ej: CLASIFICACIÓN">
-
-    <label for="highlightDriver">Piloto a marcar:</label>
-    <input type="text" id="highlightDriver" placeholder="Ej: Jose Krilín">
-  </div>
-
-  <div class="field">
-    <label for="raceNumber">Carrera actual:</label>
-    <input type="number" id="raceNumber" placeholder="Ej:1" min="1">
-  </div>
-  <div class="field">
-    <label for="totalRaces">Total de carreras:</label>
-    <input type="number" id="totalRaces" placeholder="Ej: 1" min="1">
-  </div>
+    <!-- Barra de progreso -->
+    <div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+  <div class="progress-text" id="progressText"></div>
 </div>
+</fieldset>
 
-  <!-- Selección de columnas -->
-  <div class="upload-section">
-    <label>Columnas de la clasificación:</label>
-    <div class="columns-horizontal">
-      <label><input type="checkbox" value="position" checked><span>Posición</span></label>
-      <label><input type="checkbox" value="country" checked><span>País</span></label>
-      <label><input type="checkbox" value="name" checked><span>Nombre</span></label>
-      <label><input type="checkbox" value="points"><span>Puntos</span></label>
-      <label><input type="checkbox" value="poles"><span>Poles</span></label>
-      <label><input type="checkbox" value="wins"><span>Victorias</span></label>
-      <label><input type="checkbox" value="top5"><span>Top 5</span></label>
-      <label><input type="checkbox" value="avgstart"><span>Media Clasificación</span></label>
-      <label><input type="checkbox" value="avgfinish"><span>Media Final</span></label>
-      <label><input type="checkbox" value="starts"><span>Participaciones</span></label>
-      <label><input type="checkbox" value="lapslead"><span>Vueltas Lideradas</span></label>
-      <label><input type="checkbox" value="incidents"><span>Incidentes</span></label>
-      <label><input type="checkbox" value="irating"><span>iRating</span></label>
-      <label><input type="checkbox" value="laps"><span>Vueltas Totales</span></label>
+      <!-- =======================
+           CONFIGURACIÓN + OPCIONES EXTRA
+      ======================= -->
+      <fieldset class="options-block">
+        <legend>⚙️ Personalización </legend>
+
+        <!-- Bloque Configuración -->
+        <fieldset class="sub-block">
+          <legend>Configuración</legend>
+          <!-- Fila 1 -->
+          <div class="row-fields">
+            <div class="field">
+              <div class="field-title">Nombre de la clasificación:</div>
+              <input type="text" id="className" placeholder="Ej: CLASIFICACIÓN">
+            </div>
+            <div class="field">
+              <div class="field-title">Piloto a marcar:</div>
+              <input type="text" id="highlightDriver" placeholder="Ej: Jose Krilín">
+            </div>
+            <div class="field">
+              <div class="field-title">Tamaño de la clasificación:</div>
+              <input type="number" id="size" placeholder="Ej: 20" min="1" max="99">
+            </div>
+          </div>
+          <!-- Fila 2 -->
+          <div class="row-fields">
+            <div class="field">
+              <div class="field-title">Carrera actual:</div>
+              <input type="number" id="raceNumber" placeholder="Ej: 1" min="1">
+            </div>
+            <div class="field">
+              <div class="field-title">Total de carreras:</div>
+              <input type="number" id="totalRaces" placeholder="Ej: 36" min="1">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Bloque Opciones Extra -->
+        <fieldset class="sub-block">
+          <legend>Opciones extra</legend>
+          <div class="row-fields" style="justify-content:center; text-align:center;">
+            <label><input type="checkbox" id="show-legend"> Mostrar leyenda</label>
+            <label><input type="checkbox" id="show-exits"> Mostrar salidas del Top 20</label>
+          </div>
+        </fieldset>
+
+        <!-- Bloque Columnas -->
+        <fieldset class="sub-block">
+          <legend>Columnas de la clasificación</legend>
+          <div id="columnsList" class="columns-list" style="text-align:center;">
+            <span data-value="position">Posición</span>
+            <span data-value="countrycode">País</span>
+            <span data-value="name">Nombre</span>
+            <span data-value="points">Puntos</span>
+			<span data-value="poles">Poles</span>
+			<span data-value="wins">Victorias</span>
+			<span data-value="topfive">Top 5</span>
+			<span data-value="custid">ID Piloto</span>
+            <span data-value="dropped">Descartadas</span>
+            <span data-value="clubname">Club</span>
+            <span data-value="irating">iRating</span>
+            <span data-value="avgfinish">Media Final</span>
+            <span data-value="starts">Participaciones</span>
+            <span data-value="lapslead">Vueltas Lideradas</span>
+            <span data-value="incidents">Incidentes</span>
+            <span data-value="division">División</span>
+            <span data-value="weekscounted">Semanas Contadas</span>
+            <span data-value="laps">Vueltas Totales</span>
+            <span data-value="avgstart">Media Clasificación</span>
+          </div>
+
+          <!-- Botón añadir -->
+          <div style="text-align:center; margin:15px 0;">
+            <button type="button" id="addColumnBtn">Añadir ➕</button>
+          </div>
+
+          <!-- Cuadro con columnas seleccionadas -->
+          <div id="selectedColumns" class="selected-columns" style="text-align:center; margin-top:10px;"></div>
+        </fieldset>
+	<!-- =======================
+     BOTONES / ACCIONES
+======================= -->
+<fieldset class="sub-block">
+  <div class="row-fields" style="justify-content:center; text-align:center;">
+    <button id="generateBtn" class="primary">Generar clasificación</button>
+    <button id="updateBtn" class="primary" disabled>Actualizar clasificación</button>
+  </div>
+</fieldset>
+</fieldset>
+
+<!-- =======================
+     VISTA PREVIA
+======================= -->
+<fieldset class="options-block">
+  <legend>👀 Vista previa</legend>
+  <div class="sub-block">
+    <div id="preview-container">
+      <!-- Clasificación anterior -->
+      <div class="preview-box">
+        <h3>Vista previa (Clasificación anterior)</h3>
+        <div class="scroll-container">
+          <div id="preview-old"></div>
+        </div>
+        <div id="pagination-old" class="pagination"></div>
+      </div>
+      <!-- Clasificación nueva -->
+      <div class="preview-box">
+        <h3>Vista previa (Clasificación nueva)</h3>
+        <div class="scroll-container">
+          <div id="preview-new"></div>
+        </div>
+        <div id="pagination-new" class="pagination"></div>
+      </div>
     </div>
+    <!-- Leyenda y salidas Top 20 -->
+    <div id="extras-container"></div>
   </div>
+</fieldset>
 
-<!-- Tamaño de clasificación y nuevas opciones -->
-<div class="upload-section row-fields">
-  <!-- Campo para elegir tamaño -->
-  <div class="field">
-    <label for="size">Tamaño de la clasificación:</label>
-    <input type="number" id="size" placeholder="Ej: 20" min="1" max="99">
-  </div>
 
-  <!-- Opciones extra -->
-  <div class="field">
-    <label>Opciones extra:</label>
-    <div class="columns-horizontal">
-      <label><input type="checkbox" id="show-legend"><span>Mostrar leyenda</span></label>
-      <label><input type="checkbox" id="show-exits"><span>Mostrar salidas del Top 20</span></label>
-    </div>
-  </div>
-</div>
+      <!-- =======================
+           COPIAR HTML
+      ======================= -->
+      <fieldset class="options-block">
+        <legend>🛠️ Herramientas</legend>
+        <div class="sub-block copy-btn-container" style="display:flex; justify-content:center; align-items:center;">
+          <button id="SeeBtn" disabled>Ampliar Clasificación</button>
+        </div>
+      </fieldset>
 
-  <!-- Botones -->
-  <div class="upload-section">
-   <button id="generateBtn" class="primary">Generar clasificación</button>
-   <button id="resetBtn" class="secondary">Reiniciar</button>	
-  </div>
-
-  <!-- Vista previa -->
-  <div id="preview-container">
-    <div class="preview-box">
-      <h3>Vista previa (Clasificación anterior)</h3>
-      <div id="preview-old"></div>
-    </div>
-    <div class="preview-box">
-      <h3>Vista previa (Clasificación nueva)</h3>
-      <div id="preview-new"></div>
-    </div>
-  </div>
-
-  <!-- Copiar HTML -->
-  <div class="copy-btn-container">
-    <button id="copyBtn" disabled>Copiar HTML</button>
-  </div>
-
-  </main>
-</div> 
+    </main>
+  </div> 
   <script src="script.js"></script>
 </body>
 </html>

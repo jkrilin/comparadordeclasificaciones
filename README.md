@@ -23,7 +23,7 @@ Esta aplicación web permite cargar archivos CSV con datos de clasificaciones de
 3. Selecciona las columnas que quieres que aparezcan en la tabla.
 4. Configura opciones como piloto destacado, tamaño máximo de tabla, mostrar leyenda y pilotos salientes.
 5. Pulsa "Generar Clasificación" para visualizar las tablas y los datos adicionales.
-6. Usa los botones para copiar el HTML o actualizar la clasificación con nuevas configuraciones.
+6. Usa el botón actualizar para añadir nuevas configuraciones a la clasificación.
 7. Puedes ampliar la clasificación en una ventana nueva para una vista detallada.
 
 ## Tecnologías usadas

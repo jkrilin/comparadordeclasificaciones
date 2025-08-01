@@ -4,7 +4,7 @@ Esta aplicación web permite cargar archivos CSV con datos de clasificaciones de
 
 ## Funcionalidades principales
 
-- Carga de archivos CSV para clasificaciones antiguas y nuevas.
+- Visita la pagina web https://jkrilin.github.io/generadordeclasificacion/ y carga de archivos CSV para clasificaciones antiguas y nuevas.
 - Selección dinámica de columnas a mostrar en la tabla.
 - Visualización lado a lado de clasificaciones anteriores y nuevas.
 - Indicadores visuales para cambios en posiciones (sube, baja, nueva entrada).
